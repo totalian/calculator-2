@@ -64,3 +64,22 @@ Array.from(operatorBtns).forEach(element => {
         }
     })
 })
+
+//equals-btn
+equalsBtn.addEventListener('click',() => {
+    if(calculator.memory && calculator.display && calculator.operationMode){
+        calculator.display = calculator.operationMode(parseFloat(calculator.memory),parseFloat(calculator.display))
+        render()
+        calculator.display= "",
+        calculator.memory= "",
+        calculator.operationMode= undefined
+    }
+})
+
+//Clear Button
+clearBtn.addEventListener('click',() => {
+    calculator.display= "",
+    calculator.memory= "",
+    calculator.operationMode= undefined
+    render()
+})
