@@ -42,7 +42,7 @@ Array.from(operatorBtns).forEach(element => {
         if(calculator.memory == ''){
             calculator.memory = calculator.display
             calculator.display = ''
-        } else {
+        } else if(calculator.display && calculator.memory) {
             calculator.display = calculator.operationMode(parseFloat(calculator.memory),parseFloat(calculator.display))
             render()
             calculator.memory = calculator.display
