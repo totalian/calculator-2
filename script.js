@@ -17,21 +17,34 @@ const calculator = {
 }
 
 //render calcualtor display to DOM display function
-const render = () => display.textContent = calculator.display
+const render = () => {
+    if(calculator.display.length > 8){
+        display.textContent = parseFloat(calculator.display).toPrecision(7)
+    } else {
+        display.textContent = calculator.display
+    }
+}
 
 //Press a number
 Array.from(numberBtns).forEach(element => {
     element.addEventListener('click', e => {
-        if(display.textContent.length < 9){
-            calculator.display = calculator.display  + e.target.textContent
-            render()
-        }
+        calculator.display = calculator.display  + e.target.textContent
+        render()
     })
 });
 
 //press an operations
 Array.from(operatorBtns).forEach(element => {
     element.addEventListener('click', e => {
+        if(calculator.memory == ''){
+            calculator.memory = calculator.display
+            calculator.display = ''
+        } else {
+            calculator.display = calculator.operationMode(parseFloat(calculator.display),parseFloat(calculator.memory))
+            render()
+            calculator.memory = calculator.display
+            calculator.display = ''
+        }
         switch(element.textContent){
             case 'x':
                 calculator.operationMode = calculator.multiply
@@ -45,9 +58,6 @@ Array.from(operatorBtns).forEach(element => {
             case '+':
                 calculator.operationMode = calculator.add
                 break        
-        }
-        if(calculator.memory == ''){
-            calculator.memory = calculator.display
         }
     })
 })
