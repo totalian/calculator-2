@@ -18,7 +18,7 @@ const calculator = {
 
 //render calcualtor display to DOM display function
 const render = () => {
-    if(calculator.display.length > 8){
+    if(calculator.display.toString().length > 8){
         display.textContent = parseFloat(calculator.display).toPrecision(7)
     } else {
         display.textContent = calculator.display
@@ -28,7 +28,10 @@ const render = () => {
 //Press a number
 Array.from(numberBtns).forEach(element => {
     element.addEventListener('click', e => {
-        calculator.display = calculator.display  + e.target.textContent
+        if(e.target.textContent == '.' && calculator.display.indexOf('.') > 0){}
+        else {
+            calculator.display = calculator.display  + e.target.textContent
+        }
         render()
     })
 });
@@ -40,7 +43,7 @@ Array.from(operatorBtns).forEach(element => {
             calculator.memory = calculator.display
             calculator.display = ''
         } else {
-            calculator.display = calculator.operationMode(parseFloat(calculator.display),parseFloat(calculator.memory))
+            calculator.display = calculator.operationMode(parseFloat(calculator.memory),parseFloat(calculator.display))
             render()
             calculator.memory = calculator.display
             calculator.display = ''
